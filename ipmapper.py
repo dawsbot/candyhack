@@ -1,9 +1,14 @@
 """
-  Take inputted URL and return lat/long
+  Author: Dawson Botsford
+  Date: 7/19/2014
+  Purpose: Take inputted URL and return lat/long
+  Creds: github help from @mossberg
 """
 import sys
 import socket
 import os
+import subprocess
+import json
 
 def main():
   #User inputted one URL 
@@ -13,9 +18,7 @@ def main():
  
   url = sys.argv[1]
   ip = socket.gethostbyname(url)
-  print ip 
-  cmd = 'curl ipinfo.io/' + ip
-  os.system(cmd)
-  print cmd 
+  cmd = 'curl -s ipinfo.io/' + ip + '/loc'
+  os.system(cmd) 
 
 main()
