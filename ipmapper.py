@@ -9,8 +9,10 @@ import sys
 import socket
 import subprocess
 import math
+import urllib2
+import xml.etree.ElementTree as ET
 
-#Havermath.sine estimation between two points in km
+#Haversine estimation between two points in km
 def get_dist(point1, point2):
   list1 = point1.split(',')   
   list2 = point2.split(',')   
@@ -42,12 +44,25 @@ def get_loc(ip):
   (out, err) = proc.communicate()
   return out
 
-#Get the lat/long for current network
-def get_home_loc():
-  cmd = 'curl -s ipinfo.io/loc'
+#Get the ip for current network
+def get_home_ip():
+  cmd = 'curl -s ipinfo.io/ip'
   proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
   (out, err) = proc.communicate()
   return out
+
+#Takes in ip and returns lat/long
+def get_home_loc( ):
+  response = urllib2.urlopen('http://api.ipaddresslabs.com/iplocation/v1.7/locateip?key=demo&ip=' + str(get_home_ip()).rstrip() + '&format=XML')    
+  html = response.read()
+#  htmllist = html.split('\n')
+#  for x in htmllist:
+#    print x
+  root = ET.fromstring(html)
+  lat = root.find('geolocation_data').find('latitude').text
+  longitude = root.find('geolocation_data').find('longitude').text
+  return str(lat) + ', ' + str(longitude)
+
 
 def main():
   if len(sys.argv) != 2:
@@ -64,5 +79,9 @@ def main():
   distmi = distkm * 0.621371
   print str(distkm) + ' km'
   print str(distmi) + ' mi'
+  """
+  print 'current ip: ' + str(get_home_ip())
+  get_location() 
+  """
 
 main()
