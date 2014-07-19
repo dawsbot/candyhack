@@ -3,6 +3,7 @@
 """
 import sys
 import socket
+import os
 
 def main():
   #User inputted one URL 
@@ -11,7 +12,10 @@ def main():
        return
  
   url = sys.argv[1]
-  print socket.gethostbyname(url)
-  
-  
+  ip = socket.gethostbyname(url)
+  print ip 
+  cmd = 'curl ipinfo.io/' + ip
+  os.system(cmd)
+  print cmd 
+
 main()
