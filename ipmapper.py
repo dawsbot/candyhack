@@ -77,6 +77,7 @@ def main():
   print 'distance from (' + get_loc(ip).rstrip() + ') to (' + get_home_loc().rstrip() + ') in km'
   distkm =  get_dist(get_loc(ip), get_home_loc()) 
   distmi = distkm * 0.621371
+  print '\nYour distance from the host server: '
   print str(distkm) + ' km'
   print str(distmi) + ' mi'
   """
