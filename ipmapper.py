@@ -55,9 +55,6 @@ def get_home_ip():
 def get_home_loc( ):
   response = urllib2.urlopen('http://api.ipaddresslabs.com/iplocation/v1.7/locateip?key=demo&ip=' + str(get_home_ip()).rstrip() + '&format=XML')    
   html = response.read()
-#  htmllist = html.split('\n')
-#  for x in htmllist:
-#    print x
   root = ET.fromstring(html)
   lat = root.find('geolocation_data').find('latitude').text
   longitude = root.find('geolocation_data').find('longitude').text
@@ -74,7 +71,7 @@ def main():
   ip = socket.gethostbyname(url)
   
   #Print distances 
-  print 'distance from (' + get_loc(ip).rstrip() + ') to (' + get_home_loc().rstrip() + ') in km'
+  print 'Distance from (' + get_loc(ip).rstrip() + ') to (' + get_home_loc().rstrip() + ')'
   distkm =  get_dist(get_loc(ip), get_home_loc()) 
   distmi = distkm * 0.621371
   print '\nYour distance from the host server: '
